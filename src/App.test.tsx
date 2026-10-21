@@ -40,6 +40,20 @@ describe('App: авторизация', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Неверная почта или пароль');
   });
 
+  it('регистрация: лимит запросов (429) объясняется, а не выдаётся за ошибку сервера', async () => {
+    const signUp = vi.fn().mockRejectedValue(new ApiError('rate-limit', 429));
+    render(<App services={{ tours, auth: fakeAuth({ signUp }) }} />);
+
+    await userEvent.click(await screen.findByRole('button', { name: 'Нет аккаунта? Зарегистрироваться' }));
+    await userEvent.type(screen.getByLabelText('Почта'), 'rem@example.com');
+    await userEvent.type(screen.getByLabelText('Пароль'), 'secret123');
+    await userEvent.click(screen.getByRole('button', { name: 'Зарегистрироваться' }));
+
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('Слишком много запросов');
+    expect(alert).not.toHaveTextContent('Ошибка на сервере');
+  });
+
   it('клиентская валидация: короткий пароль не уходит на сервер', async () => {
     const signIn = vi.fn();
     render(<App services={{ tours, auth: fakeAuth({ signIn }) }} />);

@@ -7,6 +7,7 @@ export type ApiErrorKind =
   | 'forbidden'
   | 'not-found'
   | 'sold-out'
+  | 'rate-limit'
   | 'validation'
   | 'server';
 
@@ -16,6 +17,7 @@ const MESSAGES: Record<ApiErrorKind, string> = {
   forbidden: 'Недостаточно прав: это действие доступно только автору записи.',
   'not-found': 'Запись не найдена. Возможно, её уже удалили.',
   'sold-out': 'Недостаточно свободных мест: их успели занять. Список обновлён, выберите меньше гостей.',
+  'rate-limit': 'Слишком много запросов. Подождите несколько минут и повторите попытку.',
   validation: 'Сервер отклонил данные. Проверьте поля формы.',
   server: 'Ошибка на сервере. Попробуйте ещё раз через минуту.',
 };
@@ -38,6 +40,8 @@ export function kindFromStatus(status: number | null): ApiErrorKind {
   if (status === 401) return 'unauthorized';
   if (status === 403) return 'forbidden';
   if (status === 404) return 'not-found';
+  // Например, лимит писем встроенной почты Supabase при регистрации
+  if (status === 429) return 'rate-limit';
   if (status === 400 || status === 409 || status === 422) return 'validation';
   return 'server';
 }

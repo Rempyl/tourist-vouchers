@@ -9,6 +9,7 @@ describe('kindFromStatus', () => {
     [401, 'unauthorized'],
     [403, 'forbidden'],
     [404, 'not-found'],
+    [429, 'rate-limit'],
     [400, 'validation'],
     [409, 'validation'],
     [500, 'server'],
