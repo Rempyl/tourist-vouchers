@@ -14,14 +14,14 @@
 1. Миграция туров **применена** в Supabase (20.10.2026; проверено: таблицы `tours` и `bookings` с RLS, 7 политик, триггеры; `deadlines` не тронута). Осталось проверить вход двумя пользователями: чужой тур удалить нельзя, чужую бронь не видно, при нехватке мест показывается ошибка «Недостаточно свободных мест».
 2. В Supabase включено **Confirm email**; для демо студент выключает его сам (Authentication → Sign In / Providers).
 3. Репозиторий на GitHub не создан, код не залит.
-4. Сайт на Vercel не опубликован. При входе в Vercel студент получил сообщение «Your account requires further verification. Complete the account recovery form for further assistance.» Это блокировка аккаунта на стороне сервиса: её не обходить, форму восстановления студент заполняет сам. Если Vercel недоступен, запасной вариант: Netlify или Cloudflare Pages (нужен их формат SPA-редиректа вместо `vercel.json`); сначала спросить студента, примет ли преподаватель другой хостинг.
+4. Сайт не опубликован. Репозиторий: https://github.com/Rempyl/tourist-vouchers (ветка main). Vercel недоступен: при входе студент получает «Your account requires further verification» (блокировка аккаунта, не обходить, форму восстановления заполняет студент). Преподаватель принял другой хостинг, выбран **Netlify**: добавлен `netlify.toml`, деплой ведёт студент в своём аккаунте. Правило 22 в `CLAUDE.md` и `vercel.json` остались от Vercel и не менялись.
 5. `development_report.md` (ДЗ 4), `backend_documentation.md` (ДЗ 5) и скриншоты в `docs/screenshots/` всё ещё описывают DeadlineHub: их нужно переписать под туры и переснять.
 
 ## Порядок дальнейших шагов
 
 1. Применить миграцию туров в Supabase, выключить Confirm email, проверить вход двумя пользователями на `npm run dev`.
 2. GitHub: `git init`, `.gitignore` уже настроен (`.env*`, `node_modules`, `dist`), коммит и push в новый репозиторий.
-3. Vercel: импорт репозитория, переменные `VITE_SUPABASE_URL` и `VITE_SUPABASE_ANON_KEY`, Deploy; после добавления переменных нужен Redeploy. В Supabase Authentication → URL Configuration вписать адрес сайта.
+3. Netlify: импорт репозитория, переменные `VITE_SUPABASE_URL` и `VITE_SUPABASE_ANON_KEY` (студент вводит сам), Deploy; после изменения переменных нужен повторный деплой. В Supabase Authentication → URL Configuration вписать адрес сайта.
 4. Переписать отчёты, снять скриншоты, вписать ссылки на репозиторий и деплой.
 
 ## Правила безопасности для этой работы

@@ -1,0 +1,16 @@
+# Настройки деплоя на Netlify.
+# Переменные VITE_SUPABASE_URL и VITE_SUPABASE_ANON_KEY задаются в интерфейсе Netlify, а не здесь.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Vite 8 требует Node 20.19+ или 22.12+
+  NODE_VERSION = "22"
+
+# SPA: любой путь отдаёт index.html, чтобы работала перезагрузка страницы
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

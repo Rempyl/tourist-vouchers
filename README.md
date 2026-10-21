@@ -72,7 +72,17 @@ docs/screenshots/ скриншоты (остались от прежней ве�
 
 78 тестов: чистая логика (валидация, бронирование, фильтр и сортировка, форматирование), слой API (замена клиента на заглушку), компоненты и сценарии (каталог, бронь и отмена, добавление и удаление тура, фильтр, ошибки, вход). SQL-тесты политик доступа лежат в `supabase/tests/rls_tours_test.sql`; они требуют локального PostgreSQL и пока не запускались.
 
-## Деплой на Vercel
+## Деплой на Netlify
+
+Настройки лежат в `netlify.toml` (сборка `npm run build`, папка `dist`, Node 22, редирект всех путей на `/index.html`).
+
+1. Репозиторий на GitHub: `Rempyl/tourist-vouchers`.
+2. На app.netlify.com: Add new project → Import an existing project → GitHub → выберите репозиторий. Настройки подтянутся из `netlify.toml`.
+3. До первого Deploy откройте Environment variables и добавьте `VITE_SUPABASE_URL` и `VITE_SUPABASE_ANON_KEY` (значения из Supabase, Project Settings → API).
+4. После изменения переменных нужен повторный деплой (Deploys → Trigger deploy): значения `VITE_*` вшиваются в сборку.
+5. В Supabase → Authentication → URL Configuration укажите адрес сайта на Netlify (Site URL и Redirect URLs).
+
+## Деплой на Vercel (запасной вариант)
 
 1. Загрузите репозиторий на GitHub.
 2. На vercel.com: Add New → Project → выберите репозиторий (Framework Preset: Vite, настройки из `vercel.json`).
